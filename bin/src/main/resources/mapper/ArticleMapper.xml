@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bill.mapper.ArticleMapper">
+
+    <insert id="add">
+        INSERT INTO article
+            (title, content, cover_img, state, category_id, create_user_id, create_time, update_time)
+        VALUES (#{title}, #{content}, #{coverImg}, #{state}, #{categoryId}, #{createUserId}, NOW(), NOW())
+    </insert>
+
+    <select id="list" resultType="Article">
+        SELECT * FROM article
+        <where>
+            create_user_id = #{userId}
+            <if test="categoryId != null and categoryId != ''">
+                AND category_id = #{categoryId}
+            </if>
+            <if test="state != null and state != ''">
+                AND state = #{state}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
